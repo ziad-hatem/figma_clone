@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import { fabric } from "fabric";
 import { LeftSidebar, Live, Navbar, RightSidebar } from "@/components/index";
-import ScreenFitText from "@/components/ScreenFitText";
 import {
   handleCanvasMouseDown,
   handleCanvasMouseUp,
@@ -23,7 +22,6 @@ import { handleDelete, handleKeyDown } from "@/lib/key-events";
 import { handleImageUpload } from "@/lib/shapes";
 import { useMutation, useRedo, useStorage, useUndo } from "@/liveblocks.config";
 import { ActiveElement, Attributes } from "@/types/type";
-import Background from "@/components/Background";
 
 const Home = () => {
   // useUndo and useRedo are hooks provided by Liveblocks that allow you to undo and redo mutations.
@@ -31,9 +29,9 @@ const Home = () => {
   const redo = useRedo();
 
   /**
-     * useStorage is a hook provided by Liveblocks that allows you to storendata in a key-value store and automatically sync it with other users
-     * useStorage: https://liveblocks.io/docs/api-reference/liveblocks-react#useStorage
-     */
+   * useStorage is a hook provided by Liveblocks that allows you to storendata in a key-value store and automatically sync it with other users
+   * useStorage: https://liveblocks.io/docs/api-reference/liveblocks-react#useStorage
+   */
   const canvasObjects = useStorage((root) => root.canvasObjects);
 
   // syncShapeInStorage is a mutation that syncs the shape in the key-value tore of liveblocks
@@ -112,9 +110,8 @@ const Home = () => {
   const [activeElement, setActiveElement] = useState<ActiveElement>({
     name: "",
     value: "",
-    icon: ""
+    icon: "",
   });
-
 
   const handleActiveElement = (elem: ActiveElement) => {
     setActiveElement(elem);
@@ -156,7 +153,7 @@ const Home = () => {
         // set the selected shape to the selected element
         selectedShapeRef.current = elem?.value as string;
         break;
-    };
+    }
   };
 
   useEffect(() => {
@@ -174,7 +171,7 @@ const Home = () => {
         canvas,
         isDrawing,
         shapeRef,
-        selectedShapeRef
+        selectedShapeRef,
       });
     });
 
@@ -185,7 +182,7 @@ const Home = () => {
         isDrawing,
         shapeRef,
         selectedShapeRef,
-        syncShapeInStorage
+        syncShapeInStorage,
       });
     });
 
@@ -197,7 +194,7 @@ const Home = () => {
         selectedShapeRef,
         syncShapeInStorage,
         setActiveElement,
-        activeObjectRef
+        activeObjectRef,
       });
     });
 
@@ -305,21 +302,17 @@ const Home = () => {
             file: e.target.files[0],
             canvas: fabricRef as any,
             shapeRef,
-            syncShapeInStorage
+            syncShapeInStorage,
           });
         }}
       />
       <section className="flex flex-row h-full">
-        <h1 className="sr-only text-white">Figman - a minimalist clone of Figma</h1>
+        <h1 className="sr-only text-white">
+          Figman - a minimalist clone of Figma
+        </h1>
         <LeftSidebar allShapes={Array.from(canvasObjects)} />
         <div className="relative w-full h-full">
-          <Live
-            canvasRef={canvasRef}
-            undo={undo}
-            redo={redo}
-          />
-        <ScreenFitText />
-        <Background />
+          <Live canvasRef={canvasRef} undo={undo} redo={redo} />
         </div>
         <RightSidebar
           elementAttributes={elementAttributes}
@@ -334,4 +327,4 @@ const Home = () => {
   );
 };
 
-export default Home; 
+export default Home;
